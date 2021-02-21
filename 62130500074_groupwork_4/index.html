@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gura Gallery</title>
+
+  <!-- https://google.github.io/material-design-icons/#icon-font-for-the-web -->
+  <!-- Using via Google Web Fonts -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+  <!-- https://tailwindcss.com/docs/installation -->
+  <!-- Using Tailwind via CDN -->
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+  <!-- https://v3.vuejs.org/guide/installation.html#release-notes -->
+  <!-- Vue CDN    background="images/bg1.jpg -->
+  <script src="https://unpkg.com/vue@next"></script>
+
+</head>
+
+
+<body >
+
+
+  <!--preview  -->
+  <div id="app" class="container mx-auto h-screen flex items-center justify-center  ">
+
+
+    <div  v-if="!showGura">
+
+      <h1 class="text-2xl font-bold text-center">Gura Gallery({{ getImgLength }}) Likes({{countLikes}})</h1>
+      <!--  -->
+      <div class="w-full flex mt-5 h-8 justify-between">
+        <i class="fas fa-search cursor-pointer" @click="SearchGura" v-show="!searchPhoto"></i>
+        <input v-model="Gurasearch" @keyup.enter="GuraResult" type="text" placeholder="Please searching photos"
+          v-if="searchPhoto" class=" border-2 border-black w-full">
+        <button @click="Cancel" v-if="searchPhoto" class="bg-blue-700 text-white p-1 ml-3">Cancel</button>
+      </div>
+
+      <!--  -->
+      <div v-for="(Guraimgs,index) in imgs" class="flex my-5 items-center  "
+        :class="[Guraimgs.Hiddenimgs ? 'hidden' : '']">
+        <img class=" hover:bg-red-700 w-32 mr-4 cursor-pointer rounded shadow-x " :src="Guraimgs.src"@click="Guracick(Guraimgs.src);">
+        <div class="love font-bold hover:text-red-600">
+          <p>{{ Guraimgs.love }}</p>
+        </div>
+        <i v-if="Guraimgs.likes" class="fas fa-heart ml-5 hover:text-red-600" @click="GuraShow(index)"
+          style="color: red;"></i>
+        <i v-else class="far fa-heart ml-5 cursor-pointer" @click="GuraShow(index)"></i>
+      </div>
+
+      <p p v-if="!findGura" class="p-5 text-2xl font-bold mt-5 text-gray-400">No picture Gura</p>
+
+    </div>
+    <!--  -->
+    <div class=" pr-36 pb-16 bg-black ml-12 cursor-pointer mt-8" v-else="showGura">
+      <div class="container flex flex-col">
+        <i class="fas fa-window-close text-white self-end justify-self-center cursor-pointer mt-10 text-5xl"
+          @click="Guraclose"></i>
+        <div class="flex justify-center">
+          <img :src="Guralove" class="w-1/2">
+        </div>
+      </div>
+    </div>
+ 
+  </div>
+  <!--  -->
+
+
+
+
+  <!-- my main.js -->
+  <script src="./main.js"></script>
+</body>
+
+</html>
+<!-- 
+<button>
+  <span @click="toggle" class="material-icons" v-if="show.icon"> search</span>
+</button>
+
+<div v-if="show.searchbar" class="input-container">
+ 
+< -->
+<!-- <input class=" ml-2 p-1 w-80 placeholder-gray-500 placeholder-opacity-50 focus:outline-none text-black rounded-sm" 
+ type="text" placeholder="Please enter text for searching photos" v-model="authorName">
+ <button class="ml-2 p-1 rounded-sm focus:outline-none bg-blue-700" @click="toggle">Cancel</button>
+</div> -->
